@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+
+  mongoclient:
+    image: mongoclient/mongoclient:latest
+
+  catalogdb:
+    image: mongo:latest
+
+  catalog.api:
+    image: ${DOCKER_REGISTRY-}catalogapi
+    build:
+      context: .
+      dockerfile: Services/Catalog/Catalog.API/Dockerfile
+
+  basketdb:
+    image: redis:latest
+
+volumes:
+  mongo_data:

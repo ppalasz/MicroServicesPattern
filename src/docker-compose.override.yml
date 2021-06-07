@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+
+  catalogdb:
+    container_name: catalogdb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  catalog.api:
+    container_name: catalog.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://catalogdb:27017"
+    depends_on:
+      - catalogdb
+    ports:
+      - "8000:80"
+
+  mongoclient:
+    container_name: mongoclient    
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development      
+      - MONGO_URL=mongodb://catalogdb:27017/CatalogDb
+      - MONGO_OPLOG_URL=mongodb://catalogdb:27017/CatalogDb
+      - RUNNING_IN_DOCKER=true
+    volumes:   
+      - mongo_data:/data/db
+    depends_on:
+      - catalogdb
+
+  basketdb:
+    container_name: basketdb
+    restart: always    
+    ports:
+        - "6379:6379"
