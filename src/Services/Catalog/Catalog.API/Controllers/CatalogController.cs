@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using Catalog.API.Entities;
+﻿using Catalog.API.Entities;
 using Catalog.API.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Catalog.API.Controllers
 {
@@ -19,10 +18,10 @@ namespace Catalog.API.Controllers
 
 		public CatalogController(IProductRepository repository, ILogger<CatalogController> logger)
 		{
-			_repository = repository ?? throw 
+			_repository = repository ?? throw
 				new ArgumentNullException(nameof(repository));
 
-			_logger = logger ?? throw 
+			_logger = logger ?? throw
 				new ArgumentNullException(nameof(logger));
 		}
 
@@ -34,7 +33,6 @@ namespace Catalog.API.Controllers
 				.GetProducts();
 
 			return Ok(products);
-
 		}
 
 		[HttpGet("{id:length(24)}", Name = "GetProduct")]
@@ -99,5 +97,5 @@ namespace Catalog.API.Controllers
 		{
 			return Ok(await _repository.DeleteProduct(id));
 		}
-    }
+	}
 }

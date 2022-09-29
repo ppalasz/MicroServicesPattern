@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Catalog.API.Entities;
+﻿using Catalog.API.Entities;
 using MongoDB.Driver;
+using System.Collections.Generic;
 
 namespace Catalog.API.Data
 {

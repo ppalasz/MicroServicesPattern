@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Catalog.API.Data.Interfaces;
+﻿using Catalog.API.Data.Interfaces;
 using Catalog.API.Entities;
 using Catalog.API.Repositories.Interfaces;
 using MongoDB.Driver;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Catalog.API.Repositories
 {
-	public class ProductRepository: IProductRepository
+	public class ProductRepository : IProductRepository
 	{
 		private readonly ICatalogContext _context;
 
 		public ProductRepository(ICatalogContext context)
 		{
-			_context = context ?? throw 
+			_context = context ?? throw
 				new ArgumentNullException(nameof(context));
 		}
-
 
 		public async Task<IEnumerable<Product>> GetProducts()
 		{
@@ -26,7 +24,6 @@ namespace Catalog.API.Repositories
 				.Products
 				.Find(p => true)
 				.ToListAsync();
-
 		}
 
 		public async Task<Product> GetProduct(string id)
@@ -73,17 +70,17 @@ namespace Catalog.API.Repositories
 			var updateResult = await _context
 				.Products
 				.ReplaceOneAsync(
-					filter: p=>p.Id == product.Id, 
+					filter: p => p.Id == product.Id,
 					replacement: product);
 
-			return updateResult.IsAcknowledged 
-			       && updateResult.ModifiedCount > 0;
+			return updateResult.IsAcknowledged
+				   && updateResult.ModifiedCount > 0;
 		}
 
 		public async Task<bool> DeleteProduct(string id)
 		{
 			var deleteResult = await _context.Products
-				.DeleteOneAsync(p=>p.Id==id);
+				.DeleteOneAsync(p => p.Id == id);
 
 			return deleteResult.IsAcknowledged
 				&& deleteResult.DeletedCount > 0;

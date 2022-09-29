@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Catalog.API.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Catalog.API.Entities;
 
 namespace Catalog.API.Repositories.Interfaces
 {
@@ -19,6 +19,5 @@ namespace Catalog.API.Repositories.Interfaces
 		Task<bool> UpdateProduct(Product product);
 
 		Task<bool> DeleteProduct(string id);
-
 	}
 }
